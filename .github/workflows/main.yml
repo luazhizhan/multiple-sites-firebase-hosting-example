@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, staging ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Build Project
+      run: |
+        yarn
+        yarn build
+        
+    - name: Deploy to staging site
+      if: github.ref === 'staging'
+      uses: lowply/deploy-firebase@v0.0.2
+      with:
+        args: deploy --only hosting:staging --non-interactive
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      
+    - name: Deploy to production site
+      if: github.ref === 'master'
+      uses: lowply/deploy-firebase@v0.0.2
+      with:
+        args: deploy --only hosting:prod --non-interactive
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+    - name: Archive build Artifact
+      uses: actions/upload-artifact@master
+      with:
+        path: build
