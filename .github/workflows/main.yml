@@ -18,7 +18,7 @@ jobs:
         yarn build
         
     - name: Deploy to staging site
-      if: github.ref == 'staging'
+      if: github.ref == 'refs/heads/staging'
       uses: lowply/deploy-firebase@v0.0.2
       with:
         args: deploy --only hosting:staging --non-interactive
@@ -26,7 +26,7 @@ jobs:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       
     - name: Deploy to production site
-      if: github.ref == 'master'
+      if: github.ref == 'refs/heads/master'
       uses: lowply/deploy-firebase@v0.0.2
       with:
         args: deploy --only hosting:prod --non-interactive
