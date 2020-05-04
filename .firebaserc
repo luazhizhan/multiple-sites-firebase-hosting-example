@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "lzz-personalblog"
+  },
+  "targets": {
+    "lzz-personalblog": {
+      "hosting": {
+        "staging": [
+          "staging-lzz-personalblog"
+        ],
+        "prod": [
+          "lzz-personalblog"
+        ]
+      }
+    }
+  }
+}
