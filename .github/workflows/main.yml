@@ -24,11 +24,11 @@ jobs:
         
     - name: Deploy to staging site
       if: github.ref == 'refs/heads/staging'
-      run: firebase deploy --only hosting:staging --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
+      run: firebase deploy --only hosting:staging --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "Message ${{ github.event.head_commit.message }}"
       
     - name: Deploy to production site
       if: github.ref == 'refs/heads/master'
-      run: firebase deploy --only hosting:prod --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
+      run: firebase deploy --only hosting:prod --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "Message ${{ github.event.head_commit.message }}"
 
     - name: Archive build Artifact
       uses: actions/upload-artifact@master
