@@ -1,4 +1,4 @@
-name: CI
+name: Firebase hosting
 
 on:
   push:
