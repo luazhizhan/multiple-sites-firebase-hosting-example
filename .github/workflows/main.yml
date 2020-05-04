@@ -12,7 +12,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Build Project
+    - name: Build website
       run: |
         yarn
         yarn build
@@ -24,6 +24,7 @@ jobs:
         args: deploy --only hosting:staging --non-interactive
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        FIREBASE_PROJECT: lzz-personalblog
       
     - name: Deploy to production site
       if: github.ref == 'refs/heads/master'
@@ -32,6 +33,7 @@ jobs:
         args: deploy --only hosting:prod --non-interactive
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        FIREBASE_PROJECT: lzz-personalblog
 
     - name: Archive build Artifact
       uses: actions/upload-artifact@master
